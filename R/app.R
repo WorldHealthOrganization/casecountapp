@@ -23,7 +23,9 @@ build_casecount_display <- function(
   desc,
   ref_source = NULL,
   append_higher_admin_name = FALSE,
-  nrow = 2, ncol = 3,
+  geo_links = NULL,
+  nrow = 2,
+  ncol = 3,
   thumb = FALSE,
   state = NULL,
   views = NULL,
@@ -56,6 +58,20 @@ build_casecount_display <- function(
   }
   dc <- d %>%
     mutate(cogs = map2_cog(data, population, get_cogs2))
+
+  if (!is.null(geo_links)) {
+    for (ll in geo_links) {
+      nm <- paste0("view_", ll$ref_level)
+      dc[[nm]] <- cog_disp_filter(
+        ll$display,
+        var = ll$variable,
+        desc = paste0("View plots for ", ll$ref_level,
+          " in this ", ll$cur_level),
+        val = dc[[ll$variable]], default_label = TRUE,
+        type = ll$type
+      )
+    }
+  }
 
   # get limits
   lims <- get_lims(d)
