@@ -1,4 +1,8 @@
-
+#' Register an app
+#' @param name App name.
+#' @param path Directory in which app will be deployed.
+#'   By default, this is a temporary directory, and then the app can be
+#'   deployed to possibly several locations using [deploy_app()].
 #' @export
 register_app <- function(name, path = tempfile()) {
   if (!dir.exists(path))
@@ -10,24 +14,23 @@ register_app <- function(name, path = tempfile()) {
   ), class = c("registered_app", "list"))
 }
 
-# reads data and sends it to trelliscope in a temporary directory
+#' Add a case count display using 'geo cards' to an app
+#' @export
 build_casecount_display <- function(
   app,
   sources,
   name,
   desc,
   ref_source = NULL,
+  append_higher_admin_name = FALSE,
   nrow = 2, ncol = 3,
   thumb = FALSE,
   state = NULL,
   views = NULL,
   id = NULL,
-  order = 1
-  # source_ids = NULL,
-  # md_desc = md,
-  # tr_detail = "md_object",
-  # geo_name,
-  # geo_id
+  order = 1,
+  case_fatality_max = 20
+  # md_desc = md
 ) {
   if (!inherits(app, "registered_app"))
     stop("'app' not a valid object. See register_app().", call. = FALSE)
@@ -35,63 +38,95 @@ build_casecount_display <- function(
   if (is.null(ref_source))
     ref_source <- sources[[1]]$source
 
+  geo_higher_level <- NULL
+  if (append_higher_admin_name)
+    geo_higher_level <- get_geo_higher_level(sources)
+
   # assemble data
   d <- get_casecount_data(sources, ref_source)
   # d$data[[1]] %>% group_by(source) %>% summarise(max_date = max(date))
 
   # add cognostics
+  pb <- progress::progress_bar$new(
+    format = "Computing cognostics [:bar] :percent :current/:total eta::eta",
+    total = nrow(d))
+  get_cogs2 <- function(x, pop) {
+    pb$tick()
+    get_cogs(x, pop)
+  }
   dc <- d %>%
-    mutate(cogs = map2_cog(data, population, get_cogs))
+    mutate(cogs = map2_cog(data, population, get_cogs2))
 
   # get limits
   lims <- get_lims(d)
 
   # add geocard panels
-  tmp <- geocard(dc[1, ], ref_source = ref_source,
-    geo_level = get_geo_level(sources))
-
+  pb <- progress::progress_bar$new(
+    format = "Creating panels [:bar] :percent :current/:total eta::eta",
+    total = nrow(dc))
   dc$panel <- lapply(seq_len(nrow(dc)), function(i) {
+    pb$tick()
     geocard(dc[i, ], ref_source = ref_source,
-      geo_level = get_geo_level(sources))
+      geo_level = get_geo_level(sources),
+      geo_higher_level = geo_higher_level,
+      y_log_domain = lims,
+      case_fatality_max = case_fatality_max)
   })
-  class(dd$panel) <- c("trelliscope_panels", "list")
-  cnms <- setdiff(names(dd), "flag_url")
-  dd <- dd %>% ungroup() %>% select(one_of(cnms))
+  class(dc$panel) <- c("trelliscope_panels", "list")
 
+  cnms <- setdiff(names(dc), c("flag_url", "map_url"))
+  dc2 <- dc %>% ungroup() %>% select(one_of(cnms))
 
   # make plot
-
-  # y_domain = NULL, y_log_domain = NULL, 
-
-
-  p <- trelliscope(dd,
-    name = tr_name,
-    desc = tr_desc,
-    md_desc = md_desc,
-    path = dr,
+  p <- trelliscope(dc2,
+    name = name,
+    desc = desc,
+    # md_desc = md_desc,
+    path = app$path,
     state = state,
-    # md_desc = tr_
-    width = 500, height = 416,
+    width = 500,
+    height = 416,
     thumb = thumb,
     views = views,
     id = id,
     order = order,
-    nrow = nrow, ncol = ncol)
+    nrow = nrow,
+    ncol = ncol)
 
   print(p)
 }
 
-# 
-deploy_app <- function() {
-  if (!inherits(x, "casecount_built_app"))
+#' Copies app to a location
+#' @export
+view_app <- function(app) {
+  if (!inherits(app, "registered_app"))
     stop("Not a valid object.", call. = FALSE)
-
+  browseURL(file.path(app$path, "index.html"))
 }
 
+#' Copies app to a location
+#' @export
+deploy_app <- function(app, dest_dir, require_token = FALSE) {
+  if (!inherits(app, "registered_app"))
+    stop("Not a valid object.", call. = FALSE)
+}
+
+# internal (maybe expose later)
 get_geo_level <- function(sources) {
   geo_level <- sources[[1]]$admin_level
-  if (geo_level %in% c(0:2)) 
+  if (geo_level %in% c(0:2))
     geo_level <- paste0("admin", geo_level)
+  geo_level
+}
+
+get_geo_higher_level <- function(sources) {
+  geo_level <- sources[[1]]$admin_level
+  if (geo_level %in% c(1:2)) {
+    geo_level <- paste0("admin", geo_level - 1)
+  } else {
+    message("Higher geo level set to 'NA'")
+    geo_level <- NA
+  }
   geo_level
 }
 
