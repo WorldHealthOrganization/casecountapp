@@ -11,7 +11,8 @@ register_app(name, path = tempfile())
 
 \item{path}{Directory in which app will be deployed.
 By default, this is a temporary directory, and then the app can be
-deployed to possibly several locations using \code{\link[=deploy_app]{deploy_app()}}.}
+deployed to possibly several locations using \code{\link[=deploy_cp]{deploy_cp()}} or other
+deployment mechanisms.}
 }
 \description{
 Register an app

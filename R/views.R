@@ -1,5 +1,15 @@
+#' Specify default views for a display
+#'
+#' @param ref_source TODO
+#' @param comp_sources TODO
+#' @param death_cutoff TODO
+#' @param entity_pl TODO
+#' @export
 default_views <- function(
-  ref_source, comp_sources = NULL, death_cutoff = 100, entity_pl = "entities"
+  ref_source,
+  comp_sources = NULL,
+  death_cutoff = 100,
+  entity_pl = "entities"
 ) {
   lref_source <- tolower(ref_source)
   lcomp_sources <- tolower(comp_sources)

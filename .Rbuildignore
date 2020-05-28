@@ -1,1 +1,4 @@
 ^_ignore$
+^LICENSE\.md$
+^casecountapp\.code-workspace$
+^\.github$

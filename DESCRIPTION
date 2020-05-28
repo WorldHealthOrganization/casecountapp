@@ -1,27 +1,30 @@
 Package: casecountapp
-Title: What the Package Does (One Line, Title Case)
+Title: Create an interactive application to view case count data
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Ryan",
+           family = "Hafen",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+           email = "rhafen@gmail.com")
+Description: Functions to create, view, and deploy interactive applications of multi-resolution geographical case count time series data.
+License: Apache License (>= 2.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Imports: 
     trelliscopejs (>= 0.2.6),
     geoutils,
     geocard,
     dplyr,
     purrr,
-    progress
+    progress,
+    readr,
+    rlang,
+    tidyr
 Remotes:
-    hafen/trelliscopejs@new-features
-    covid-open-data/geocard
+    hafen/trelliscopejs@new-features,
+    covid-open-data/geocard,
     covid-open-data/geoutils
+Suggests: 
+    testthat
