@@ -11,7 +11,7 @@ This R package contains functions to create, view, and deploy interactive applic
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("covid-open-data/geocard")
+remotes::install_github("covid-open-data/casecountapp")
 ```
 
 ## Example
