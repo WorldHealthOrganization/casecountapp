@@ -36,6 +36,10 @@ default_views <- function(
       state = "&nrow=2&ncol=3&arr=row&pg=1&labels=attack_rate,population&sort=attack_rate;desc&filter=&fv="
     ),
     list(
+      name = "Ordered by new cases in past 2 weeks per 100,000 population",
+      state = "&nrow=2&ncol=3&arr=row&pg=1&labels=new_2wk_case_per_100k,population&sort=new_2wk_case_per_100k;desc&filter=&fv="
+    ),
+    list(
       name = "Ordered by days since first case (most recent first)",
       state = "&nrow=2&ncol=3&arr=row&pg=1&labels=days_since_first_case&sort=days_since_first_case;asc&filter="
     )
@@ -43,13 +47,13 @@ default_views <- function(
 
   for (src in comp_sources) {
     views[[length(views) + 1]] <- list(
-      name = paste0("Ordered by absolute difference between ", src," and ",
+      name = paste0("Ordered by abs diff between ", src," and ",
         ref_source, " cases"),
       state = paste0("&nrow=2&ncol=3&arr=row&pg=1&labels=case_abs_diff_",
         tolower(src), "&sort=case_abs_diff_", tolower(src), ";desc&filter=&fv=")
     )
     views[[length(views) + 1]] <- list(
-      name = paste0("Ordered by absolute difference between ", src," and ",
+      name = paste0("Ordered by abs diff between ", src," and ",
         ref_source, " deaths"),
       state = paste0("&nrow=2&ncol=3&arr=row&pg=1&labels=death_abs_diff_",
         tolower(src), "&sort=death_abs_diff_", tolower(src),

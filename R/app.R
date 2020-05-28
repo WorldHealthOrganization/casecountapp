@@ -1,9 +1,14 @@
 #' Register an app
+#'
 #' @param name App name.
 #' @param path Directory in which app will be deployed.
 #'   By default, this is a temporary directory, and then the app can be
 #'   deployed to possibly several locations using [deploy_app()].
 #' @export
+#' @importFrom dplyr filter select mutate bind_rows group_by_at ungroup inner_join anti_join
+#' @importFrom purrr map map_lgl
+#' @importFrom progress progress_bar
+#' @importFrom readr read_csv
 register_app <- function(name, path = tempfile()) {
   if (!dir.exists(path))
     dir.create(path)
@@ -48,6 +53,21 @@ build_casecount_display <- function(
   d <- get_casecount_data(sources, ref_source)
   # d$data[[1]] %>% group_by(source) %>% summarise(max_date = max(date))
 
+  # TODO: allow parameter to this function to specify how far back to plot
+  max_date <- max(do.call(c, lapply(d$data, function(x) max(x$date))))
+  min_date <- max_date - (8 * 7)
+
+  # prune data to only those within date range and have proper cases
+  # (sometimes a case is reported early on and then reverted to zero)
+  d <- d %>%
+    mutate(
+      data = purrr::map(data, function(a) {
+        dplyr::filter(a, date >= min_date)
+      }),
+      keep = purrr::map_lgl(data, function(a) !all(a$cases == 0))) %>%
+    dplyr::filter(keep) %>%
+    dplyr::select(-keep)
+
   # add cognostics
   pb <- progress::progress_bar$new(
     format = "Computing cognostics [:bar] :percent :current/:total eta::eta",
@@ -82,10 +102,22 @@ build_casecount_display <- function(
     total = nrow(dc))
   dc$panel <- lapply(seq_len(nrow(dc)), function(i) {
     pb$tick()
-    geocard(dc[i, ], ref_source = ref_source,
-      geo_level = get_geo_level(sources),
-      geo_higher_level = geo_higher_level,
+
+    card_name <- dc[i,][[paste0(geo_obj, "_name")]]
+    if (is.character(geo_higher_level)) {
+      card_name <- paste0(card_name, ", ",
+        data[[paste0(geo_higher_level, "_name")]])
+    }
+
+    geocard(
+      data = dc[i, ]$data[[1]],
+      card_name = card_name,
+      cog = dc[i, ]$cogs[[1]],
+      population = dc[i, ]$population,
+      ref_source = ref_source,
       y_log_domain = lims,
+      min_date = min_date,
+      max_date = max_date,
       case_fatality_max = case_fatality_max)
   })
   class(dc$panel) <- c("trelliscope_panels", "list")
@@ -173,6 +205,8 @@ get_casecount_data <- function(sources, ref_source) {
 
   # nest
   code_vars <- names(d)[grepl("_code$", names(d))]
+  if (length(code_vars) == 0)
+    stop("Could not find any geo codes in the data.")
   d <- d %>%
     dplyr::group_by_at(code_vars) %>%
     tidyr::nest() %>%

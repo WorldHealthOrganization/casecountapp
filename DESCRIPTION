@@ -14,3 +14,14 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
+Imports: 
+    trelliscopejs (>= 0.2.6),
+    geoutils,
+    geocard,
+    dplyr,
+    purrr,
+    progress
+Remotes:
+    hafen/trelliscopejs@new-features
+    covid-open-data/geocard
+    covid-open-data/geoutils
