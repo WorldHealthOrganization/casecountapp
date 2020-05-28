@@ -1,3 +1,12 @@
+#' @import geoutils
+geo_data <- list(
+  admin0 = geoutils::admin0,
+  admin1 = geoutils::admin1,
+  admin2 = geoutils::admin2,
+  continents = geoutils::continents,
+  who_regions = geoutils::who_regions
+)
+
 # internal (maybe expose later)
 get_geo_level <- function(sources) {
   geo_level <- sources[[1]]$admin_level
