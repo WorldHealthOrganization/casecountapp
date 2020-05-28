@@ -1,6 +1,6 @@
 #' Add a case count display using 'geo cards' to an app
 #'
-#' @param app TODO
+#' @param app An app object created with [register_app()].
 #' @param sources TODO
 #' @param name TODO
 #' @param desc TODO

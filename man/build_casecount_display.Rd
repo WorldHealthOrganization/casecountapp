@@ -23,7 +23,7 @@ build_casecount_display(
 )
 }
 \arguments{
-\item{app}{TODO}
+\item{app}{An app object created with \code{\link[=register_app]{register_app()}}.}
 
 \item{sources}{TODO}
 

@@ -7,7 +7,7 @@
 deploy_cp(app, dest_dir, require_app_token = FALSE)
 }
 \arguments{
-\item{app}{TODO}
+\item{app}{An app object created with \code{\link[=register_app]{register_app()}}.}
 
 \item{dest_dir}{TODO}
 

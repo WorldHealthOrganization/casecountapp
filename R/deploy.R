@@ -1,6 +1,6 @@
 #' Deploy an app to Netlify
 #'
-#' @param app TODO
+#' @param app An app object created with [register_app()].
 #' @param netlify_app_id TODO
 #' @param require_app_token TODO
 #' @export
@@ -32,7 +32,7 @@ deploy_netlify <- function(app, netlify_app_id, require_app_token = FALSE) {
 
 #' Copy app to a local location
 #' 
-#' @param app TODO
+#' @param app An app object created with [register_app()].
 #' @param dest_dir TODO
 #' @param require_app_token TODO
 #' @export
@@ -45,7 +45,7 @@ deploy_cp <- function(app, dest_dir, require_app_token = FALSE) {
 
 #' Copy app to a remote location over SCP
 #'
-#' @param app TODO
+#' @param app An app object created with [register_app()].
 #' @param ip TODO
 #' @param scp_token TODO
 #' @param require_app_token TODO

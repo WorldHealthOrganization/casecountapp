@@ -7,7 +7,7 @@
 deploy_scp(app, ip, scp_token = NULL, require_app_token = FALSE)
 }
 \arguments{
-\item{app}{TODO}
+\item{app}{An app object created with \code{\link[=register_app]{register_app()}}.}
 
 \item{ip}{TODO}
 
