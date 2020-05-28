@@ -103,10 +103,10 @@ build_casecount_display <- function(
   dc$panel <- lapply(seq_len(nrow(dc)), function(i) {
     pb$tick()
 
-    card_name <- dc[i,][[paste0(geo_obj, "_name")]]
+    card_name <- dc[i,][[paste0(get_geo_level(sources), "_name")]]
     if (is.character(geo_higher_level)) {
       card_name <- paste0(card_name, ", ",
-        data[[paste0(geo_higher_level, "_name")]])
+        dc[i, ][[paste0(geo_higher_level, "_name")]])
     }
 
     geocard(
@@ -118,6 +118,7 @@ build_casecount_display <- function(
       y_log_domain = lims,
       min_date = min_date,
       max_date = max_date,
+      img_url = dc[i, ]$map_url,
       case_fatality_max = case_fatality_max)
   })
   class(dc$panel) <- c("trelliscope_panels", "list")
