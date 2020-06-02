@@ -50,9 +50,9 @@ country_display <- build_casecount_display(
   desc = "Covid-19 cases and deaths in the US",
   geo_links = list(list(
     display = "States",
-    variable = "admin0_name",
-    cur_level = "country",
+    cog_type = "cog_href",
     ref_level = "states",
+    desc = "View states",
     type = "href"
   )),
   order = 1,
