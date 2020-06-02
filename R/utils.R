@@ -87,6 +87,5 @@ get_casecount_data <- function(sources, ref_source) {
     message(paste(format(a)[-3], collapse = "\n"))
   }
 
-  class(d2) <- c(class(d2), "casecounts")
   d2
 }
