@@ -40,8 +40,9 @@ get_casecount_data <- function(sources, ref_source) {
       paste(ids, collapse = ","), " but there are ",
       length(sources), " sources.",
       call. = FALSE)
+
   d <- lapply(sources, function(x) {
-    suppressMessages(readr::read_csv(x$file)) %>%
+    suppressMessages(readr::read_csv(x$file, na = "")) %>%
       dplyr::mutate(source = x$source_id)
   }) %>%
   dplyr::bind_rows()
@@ -51,6 +52,11 @@ get_casecount_data <- function(sources, ref_source) {
       call. = FALSE)
   ids <- c(ref_source, setdiff(ids, ref_source))
   d$source <- factor(d$source, levels = ids)
+
+  geo_obj <- get_geo_level(sources)
+
+  if (geo_obj == "global")
+    d$global_code <- "GL"
 
   # nest
   code_vars <- names(d)[grepl("_code$", names(d))]
@@ -62,8 +68,6 @@ get_casecount_data <- function(sources, ref_source) {
     dplyr::ungroup()
 
   # merge geo data
-  geo_obj <- get_geo_level(sources)
-
   gu_data_nms <- a <- utils::data(package = "geoutils")$results[, "Item"]
   if (!geo_obj %in% gu_data_nms)
     stop("Could not find data in geoutils package matching admin_level: ", lvl,

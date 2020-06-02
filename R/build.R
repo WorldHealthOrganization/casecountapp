@@ -84,14 +84,15 @@ build_casecount_display <- function(
   if (!is.null(geo_links)) {
     for (ll in geo_links) {
       nm <- paste0("view_", ll$ref_level)
-      dc[[nm]] <- trelliscopejs::cog_disp_filter(
-        ll$display,
-        var = ll$variable,
-        desc = paste0("View plots for ", ll$ref_level,
-          " in this ", ll$cur_level),
-        val = dc[[ll$variable]], default_label = TRUE,
-        type = ll$type
-      )
+      desc <- ifelse(is.null(ll$desc), paste0("View ", ll$ref_level), ll$desc)
+      if (ll$cog_type == "cog_disp_filter") {
+        dc[[nm]] <- trelliscopejs::cog_disp_filter(
+          ll$display, var = ll$variable, desc = desc,
+          val = dc[[ll$variable]], default_label = TRUE, type = ll$type)
+      } else if (ll$cog_type == "cog_href") {
+        dc[[nm]] <- trelliscopejs::cog_href(
+          paste0("#display=", ll$display), type = ll$type, desc = desc)
+      }
     }
   }
 
