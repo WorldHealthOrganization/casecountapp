@@ -34,8 +34,8 @@ default_views <- function(
       state = "&nrow=2&ncol=3&arr=row&pg=1&labels=new_wk_death_change_pct&sort=new_wk_death_change_pct;desc&filter="
     ),
     list(
-      name = "Ordered by case fatality rate for ",
-        entity_pl, " with at least 100 deaths",
+      name = paste0("Ordered by case fatality rate for ",
+        entity_pl, " with at least 100 deaths"),
       state = paste0("&nrow=2&ncol=3&arr=row&pg=1&labels=case_fatality_pct,cur_death_", 
         lref_source, "&sort=case_fatality_pct;desc&filter=var:cur_death_",
         lref_source, ";type:range;from:", death_cutoff, ";to:&fv=cur_death_",
