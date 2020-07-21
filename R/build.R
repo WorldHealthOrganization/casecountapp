@@ -9,6 +9,7 @@
 #' @param geo_links TODO
 #' @param nrow TODO
 #' @param ncol TODO
+#' @param disclaimer TODO
 #' @param thumb TODO
 #' @param state TODO
 #' @param views TODO
@@ -29,16 +30,18 @@ build_casecount_display <- function(
   desc,
   ref_source = NULL,
   append_higher_admin_name = FALSE,
+  max_date = NULL,
   geo_links = NULL,
   nrow = 2,
   ncol = 3,
+  disclaimer = FALSE,
   thumb = FALSE,
   state = NULL,
   views = NULL,
   id = NULL,
   order = 1,
-  case_fatality_max = 20
-  # md_desc = md
+  case_fatality_max = 20,
+  md_desc = ""
 ) {
   if (!inherits(app, "registered_app"))
     stop("'app' not a valid object. See register_app().", call. = FALSE)
@@ -55,7 +58,8 @@ build_casecount_display <- function(
   # d$data[[1]] %>% group_by(source) %>% summarise(max_date = max(date))
 
   # TODO: allow parameter to this function to specify how far back to plot
-  max_date <- max(do.call(c, lapply(d$data, function(x) max(x$date))))
+  if (is.null(max_date))
+    max_date <- max(do.call(c, lapply(d$data, function(x) max(x$date))))
   min_date <- max_date - (8 * 7)
 
   # prune data to only those within date range and have proper cases
@@ -63,7 +67,7 @@ build_casecount_display <- function(
   d <- d %>%
     dplyr::mutate(
       data = purrr::map(.data$data, function(a) {
-        dplyr::filter(a, .data$date >= min_date)
+        dplyr::filter(a, .data$date >= min_date & .data$date <= max_date)
       }),
       keep = purrr::map_lgl(.data$data, function(a) !all(a$cases == 0))) %>%
     dplyr::filter(.data$keep) %>%
@@ -84,14 +88,14 @@ build_casecount_display <- function(
   if (!is.null(geo_links)) {
     for (ll in geo_links) {
       nm <- paste0("view_", ll$ref_level)
-      desc <- ifelse(is.null(ll$desc), paste0("View ", ll$ref_level), ll$desc)
+      descr <- ifelse(is.null(ll$desc), paste0("View ", ll$ref_level), ll$desc)
       if (ll$cog_type == "cog_disp_filter") {
         dc[[nm]] <- trelliscopejs::cog_disp_filter(
-          ll$display, var = ll$variable, desc = desc,
+          ll$display, var = ll$variable, desc = descr,
           val = dc[[ll$variable]], default_label = TRUE, type = ll$type)
       } else if (ll$cog_type == "cog_href") {
         dc[[nm]] <- trelliscopejs::cog_href(
-          paste0("#display=", ll$display), type = ll$type, desc = desc)
+          paste0("#display=", ll$display), type = ll$type, desc = descr)
       }
     }
   }
@@ -149,7 +153,9 @@ build_casecount_display <- function(
     id = id,
     order = order,
     nrow = nrow,
-    ncol = ncol)
+    ncol = ncol,
+    md_desc = md_desc,
+    disclaimer = disclaimer)
 
   print(p)
 }

@@ -42,8 +42,13 @@ get_casecount_data <- function(sources, ref_source) {
       call. = FALSE)
 
   d <- lapply(sources, function(x) {
-    suppressMessages(readr::read_csv(x$file, na = "")) %>%
+    a <- suppressMessages(readr::read_csv(x$file, na = "")) %>%
       dplyr::mutate(source = x$source_id)
+    # all admin codes should be character
+    idx <- which(grepl("_code", names(a)) & !sapply(a, is.character))
+    for (ii in idx)
+      a[[ii]] <- as.character(a[[ii]])
+    a
   }) %>%
   dplyr::bind_rows()
 
@@ -57,6 +62,10 @@ get_casecount_data <- function(sources, ref_source) {
 
   if (geo_obj == "global")
     d$global_code <- "GL"
+
+  # tmp <- tidyr::expand(d, source, date)
+  # d <- dplyr::left_join(tmp, d, by = c("source", "date")) %>%
+  #   tidyr::fill(cases, deaths, global_code)
 
   # nest
   code_vars <- names(d)[grepl("_code$", names(d))]
