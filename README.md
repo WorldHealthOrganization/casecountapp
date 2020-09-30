@@ -2,7 +2,7 @@
 # casecountapp
 
 <!-- badges: start -->
-[![R build status](https://github.com/covid-open-data/casecountapp/workflows/R-CMD-check/badge.svg)](https://github.com/covid-open-data/casecountapp/actions)
+[![R build status](https://github.com/WorldHealthOrganization/casecountapp/workflows/R-CMD-check/badge.svg)](https://github.com/WorldHealthOrganization/casecountapp/actions)
 <!-- badges: end -->
 
 This R package contains functions to create, view, and deploy interactive applications of multi-resolution geographical case count time series data.
@@ -11,7 +11,7 @@ This R package contains functions to create, view, and deploy interactive applic
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("covid-open-data/casecountapp")
+remotes::install_github("WorldHealthOrganization/casecountapp")
 ```
 
 ## Example

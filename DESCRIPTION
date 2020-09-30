@@ -24,7 +24,7 @@ Imports:
     tidyr
 Remotes:
     hafen/trelliscopejs@new-features,
-    covid-open-data/geocard,
-    covid-open-data/geoutils
+    WorldHealthOrganization/geocard,
+    WorldHealthOrganization/geoutils
 Suggests: 
     testthat
