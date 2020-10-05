@@ -11,15 +11,19 @@ build_casecount_display(
   desc,
   ref_source = NULL,
   append_higher_admin_name = FALSE,
+  max_date = NULL,
+  min_date = NULL,
   geo_links = NULL,
   nrow = 2,
   ncol = 3,
+  disclaimer = FALSE,
   thumb = FALSE,
   state = NULL,
   views = NULL,
   id = NULL,
   order = 1,
-  case_fatality_max = 20
+  case_fatality_max = 20,
+  md_desc = ""
 )
 }
 \arguments{
@@ -35,11 +39,17 @@ build_casecount_display(
 
 \item{append_higher_admin_name}{TODO}
 
+\item{max_date}{TODO}
+
+\item{min_date}{TODO}
+
 \item{geo_links}{TODO}
 
 \item{nrow}{TODO}
 
 \item{ncol}{TODO}
+
+\item{disclaimer}{TODO}
 
 \item{thumb}{TODO}
 
@@ -52,6 +62,8 @@ build_casecount_display(
 \item{order}{TODO}
 
 \item{case_fatality_max}{TODO}
+
+\item{md_desc}{TODO}
 }
 \description{
 Add a case count display using 'geo cards' to an app

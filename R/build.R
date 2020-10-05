@@ -6,6 +6,8 @@
 #' @param desc TODO
 #' @param ref_source TODO
 #' @param append_higher_admin_name TODO
+#' @param max_date TODO
+#' @param min_date TODO
 #' @param geo_links TODO
 #' @param nrow TODO
 #' @param ncol TODO
@@ -16,7 +18,8 @@
 #' @param id TODO
 #' @param order TODO
 #' @param case_fatality_max TODO
-#' @importFrom geocard get_cogs geocard get_lims
+#' @param md_desc TODO
+#' @importFrom geocard get_cogs geocard
 #' @importFrom dplyr %>% mutate filter select ungroup one_of
 #' @importFrom purrr map map_lgl
 #' @importFrom trelliscopejs map2_cog trelliscope cog_disp_filter
@@ -31,6 +34,7 @@ build_casecount_display <- function(
   ref_source = NULL,
   append_higher_admin_name = FALSE,
   max_date = NULL,
+  min_date = NULL,
   geo_links = NULL,
   nrow = 2,
   ncol = 3,
@@ -60,7 +64,8 @@ build_casecount_display <- function(
   # TODO: allow parameter to this function to specify how far back to plot
   if (is.null(max_date))
     max_date <- max(do.call(c, lapply(d$data, function(x) max(x$date))))
-  min_date <- max_date - (8 * 7)
+  if (is.null(min_date))
+    min_date <- max_date - (8 * 7)
 
   # prune data to only those within date range and have proper cases
   # (sometimes a case is reported early on and then reverted to zero)
@@ -101,7 +106,7 @@ build_casecount_display <- function(
   }
 
   # get limits
-  lims <- geocard::get_lims(d)
+  lims <- get_lims(d)
 
   # add geocard panels
   pb <- progress::progress_bar$new(

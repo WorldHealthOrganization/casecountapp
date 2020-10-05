@@ -18,7 +18,7 @@ remotes::install_github("WorldHealthOrganization/casecountapp")
 
 The code below creates a case counts app for the United States (using a set of data that comes with the package) at the country and state level.
 
-``` r
+```r
 library(casecountapp)
 
 # specify data sources
@@ -55,6 +55,7 @@ country_display <- build_casecount_display(
     desc = "View states",
     type = "href"
   )),
+  min_date = as.Date("2020-03-01"),
   order = 1,
   nrow = 1,
   ncol = 1,
@@ -74,6 +75,7 @@ state_display <- build_casecount_display(
   state = list(
     sort = list(trelliscopejs::sort_spec("cur_case_nyt", dir = "desc")),
     labels = list(), sidebar = 4),
+  min_date = as.Date("2020-03-01"),
   order = 2,
   case_fatality_max = 12,
   thumb = system.file("thumbs/US/states.png", package = "casecountapp")
