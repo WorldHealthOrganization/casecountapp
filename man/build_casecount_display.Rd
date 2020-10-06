@@ -16,7 +16,6 @@ build_casecount_display(
   geo_links = NULL,
   nrow = 2,
   ncol = 3,
-  disclaimer = FALSE,
   thumb = FALSE,
   state = NULL,
   views = NULL,
@@ -29,41 +28,39 @@ build_casecount_display(
 \arguments{
 \item{app}{An app object created with \code{\link[=register_app]{register_app()}}.}
 
-\item{sources}{TODO}
+\item{sources}{A list of sources created with \code{\link[=source_list]{source_list()}}.}
 
-\item{name}{TODO}
+\item{name}{A name for the display, which is displayed in the header of the app when this display is selected.}
 
-\item{desc}{TODO}
+\item{desc}{A description that will be shown under the name.}
 
-\item{ref_source}{TODO}
+\item{ref_source}{The name of the reference source, which should match one of the source_ids provided in \code{\link[=source_entry]{source_entry()}} when building the \code{\link[=source_list]{source_list()}}.}
 
-\item{append_higher_admin_name}{TODO}
+\item{append_higher_admin_name}{If \code{TRUE}, will append the higher-level admin name to the geocard headers. For example, if currently creating a display for admin level 2 (e.g. US counties), setting to TRUE will append the state name to the geocard header. So if viewing for Benton County in the state of Washington, the header, instead of being simply being "Benton", will now be "Benton, Washington".}
 
-\item{max_date}{TODO}
+\item{max_date}{Optional maximum date to plot. If not specified, will be set to latest date.}
 
-\item{min_date}{TODO}
+\item{min_date}{Optional minimum date to plot. If not specified, will be set to 8 weeks prior to max date.}
 
-\item{geo_links}{TODO}
+\item{geo_links}{Optional object or list of objects created by \code{\link[=geo_link_href]{geo_link_href()}} or \code{\link[=geo_link_filter]{geo_link_filter()}} that will provide links to other displays (e.g. for a given continent, provide a link in its card that when clicked will open up the display for all countries in that continent).}
 
-\item{nrow}{TODO}
+\item{nrow}{Default number of rows to show in the display.}
 
-\item{ncol}{TODO}
+\item{ncol}{Default number of columns to show in the display.}
 
-\item{disclaimer}{TODO}
+\item{thumb}{Optional path to an image file (png or jpeg) to use as the thumbnail for the display.}
 
-\item{thumb}{TODO}
+\item{state}{Optional initial state (see the \code{state} argument of \link[trelliscopejs:trelliscope]{trelliscopejs::trelliscope} for more details).}
 
-\item{state}{TODO}
+\item{views}{Optional pre-specified views to allow the user to choose between. See \code{\link[=default_views]{default_views()}} for more information.}
 
-\item{views}{TODO}
+\item{id}{Optional ID passed to \link[trelliscopejs:trelliscope]{trelliscopejs::trelliscope}.}
 
-\item{id}{TODO}
+\item{order}{Integer indicating what order this display should appear in in the display list shown when the app opens.}
 
-\item{order}{TODO}
+\item{case_fatality_max}{The maximum y-axis limit to allow for case fatality percentage. Passed to \code{\link[geocard:geocard]{geocard::geocard()}}.}
 
-\item{case_fatality_max}{TODO}
-
-\item{md_desc}{TODO}
+\item{md_desc}{Optional longer-form description of the display, provided as a markdown string.}
 }
 \description{
 Add a case count display using 'geo cards' to an app

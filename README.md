@@ -22,24 +22,24 @@ The code below creates a case counts app for the United States (using a set of d
 library(casecountapp)
 
 # specify data sources
-country_sources <- list(
-  list(source_id = "JHU", admin_level = 0,
+country_sources <- source_list(
+  source_entry(source_id = "JHU", admin_level = 0,
     file = system.file("example-data/admin0/JHU.csv", package = "casecountapp")),
-  list(source_id = "NYT", admin_level = 0,
+  source_entry(source_id = "NYT", admin_level = 0,
     file = system.file("example-data/admin0/NYT.csv", package = "casecountapp")),
-  list(source_id = "FACTS", admin_level = 0,
+  source_entry(source_id = "FACTS", admin_level = 0,
     file = system.file("example-data/admin0/FACTS.csv", package = "casecountapp")))
 
-state_sources <- list(
-  list(source_id = "JHU", admin_level = 1,
+state_sources <- source_list(
+  source_entry(source_id = "JHU", admin_level = 1,
     file = system.file("example-data/admin1/JHU.csv", package = "casecountapp")),
-  list(source_id = "NYT", admin_level = 1,
+  source_entry(source_id = "NYT", admin_level = 1,
     file = system.file("example-data/admin1/NYT.csv", package = "casecountapp")),
-  list(source_id = "FACTS", admin_level = 1,
+  source_entry(source_id = "FACTS", admin_level = 1,
     file = system.file("example-data/admin1/FACTS.csv", package = "casecountapp")))
 
 # register app
-app <- register_app("US-Covid19")
+app <- register_app("US-Covid19", path = tempdir())
 
 # build country display
 country_display <- build_casecount_display(
@@ -48,13 +48,7 @@ country_display <- build_casecount_display(
   ref_source = "NYT",
   name = "United States",
   desc = "Covid-19 cases and deaths in the US",
-  geo_links = list(list(
-    display = "States",
-    cog_type = "cog_href",
-    ref_level = "states",
-    desc = "View states",
-    type = "href"
-  )),
+  geo_link = geo_link_href(display = "States", ref_level = "states"),
   min_date = as.Date("2020-03-01"),
   order = 1,
   nrow = 1,

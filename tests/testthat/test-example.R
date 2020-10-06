@@ -5,20 +5,20 @@
 # file.copy(sources_us[[5]]$file, "inst/example-data/admin1/NYT.csv")
 # file.copy(sources_us[[6]]$file, "inst/example-data/admin1/FACTS.csv") 
 
-country_sources <- list(
-  list(source_id = "JHU", admin_level = 0,
+country_sources <- source_list(
+  source_entry(source_id = "JHU", admin_level = 0,
     file = system.file("example-data/admin0/JHU.csv", package = "casecountapp")),
-  list(source_id = "NYT", admin_level = 0,
+  source_entry(source_id = "NYT", admin_level = 0,
     file = system.file("example-data/admin0/NYT.csv", package = "casecountapp")),
-  list(source_id = "FACTS", admin_level = 0,
+  source_entry(source_id = "FACTS", admin_level = 0,
     file = system.file("example-data/admin0/FACTS.csv", package = "casecountapp")))
 
-state_sources <- list(
-  list(source_id = "JHU", admin_level = 1,
+state_sources <- source_list(
+  source_entry(source_id = "JHU", admin_level = 1,
     file = system.file("example-data/admin1/JHU.csv", package = "casecountapp")),
-  list(source_id = "NYT", admin_level = 1,
+  source_entry(source_id = "NYT", admin_level = 1,
     file = system.file("example-data/admin1/NYT.csv", package = "casecountapp")),
-  list(source_id = "FACTS", admin_level = 1,
+  source_entry(source_id = "FACTS", admin_level = 1,
     file = system.file("example-data/admin1/FACTS.csv", package = "casecountapp")))
 
 test_that("app creation works", {
@@ -31,13 +31,10 @@ test_that("app creation works", {
     ref_source = "NYT",
     name = "United States",
     desc = "Covid-19 cases and deaths in the US",
-    geo_links = list(list(
+    geo_links = geo_link_href(
       display = "States",
-      cog_type = "cog_href",
-      ref_level = "states",
-      desc = "View states",
-      type = "href"
-    )),
+      ref_level = "states"
+    ),
     order = 1,
     nrow = 1,
     ncol = 1,

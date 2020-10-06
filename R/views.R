@@ -1,9 +1,9 @@
 #' Specify default views for a display
 #'
-#' @param ref_source TODO
-#' @param comp_sources TODO
-#' @param death_cutoff TODO
-#' @param entity_pl TODO
+#' @param ref_source A reference source against which to specify default views.
+#' @param comp_sources Source IDs to compare the reference source to.
+#' @param death_cutoff When sorting by case fatality rate, what cutoff of deaths to use for excluding low-count regions.
+#' @param entity_pl The plural name to use for the geographic entity as it will be referred to in labels (e.g. "states", "countries", etc.)
 #' @export
 default_views <- function(
   ref_source,
@@ -35,7 +35,7 @@ default_views <- function(
     ),
     list(
       name = paste0("Ordered by case fatality rate for ",
-        entity_pl, " with at least 100 deaths"),
+        entity_pl, " with at least ", death_cutoff, " deaths"),
       state = paste0("&nrow=2&ncol=3&arr=row&pg=1&labels=case_fatality_pct,cur_death_", 
         lref_source, "&sort=case_fatality_pct;desc&filter=var:cur_death_",
         lref_source, ";type:range;from:", death_cutoff, ";to:&fv=cur_death_",

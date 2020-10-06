@@ -12,13 +12,13 @@ default_views(
 )
 }
 \arguments{
-\item{ref_source}{TODO}
+\item{ref_source}{A reference source against which to specify default views.}
 
-\item{comp_sources}{TODO}
+\item{comp_sources}{Source IDs to compare the reference source to.}
 
-\item{death_cutoff}{TODO}
+\item{death_cutoff}{When sorting by case fatality rate, what cutoff of deaths to use for excluding low-count regions.}
 
-\item{entity_pl}{TODO}
+\item{entity_pl}{The plural name to use for the geographic entity as it will be referred to in labels (e.g. "states", "countries", etc.)}
 }
 \description{
 Specify default views for a display

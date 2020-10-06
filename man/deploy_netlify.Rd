@@ -9,9 +9,9 @@ deploy_netlify(app, netlify_app_id, require_app_token = FALSE)
 \arguments{
 \item{app}{An app object created with \code{\link[=register_app]{register_app()}}.}
 
-\item{netlify_app_id}{TODO}
+\item{netlify_app_id}{Netlify app ID.}
 
-\item{require_app_token}{TODO}
+\item{require_app_token}{Netlify app token.}
 }
 \description{
 Deploy an app to Netlify

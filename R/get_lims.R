@@ -1,9 +1,4 @@
-#' Get limits
-#'
-#' @param d TODO
-#' @importFrom dplyr one_of
-#' @importFrom utils tail
-#' @export
+# get limits
 get_lims <- function(d) {
   # TODO: check that the object is valid
   # if (!inherits(d, "casecounts"))

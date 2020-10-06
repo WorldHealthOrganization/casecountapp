@@ -4,16 +4,14 @@
 \alias{deploy_scp}
 \title{Copy app to a remote location over SCP}
 \usage{
-deploy_scp(app, ip, scp_token = NULL, require_app_token = FALSE)
+deploy_scp(app, ip, scp_token = NULL)
 }
 \arguments{
 \item{app}{An app object created with \code{\link[=register_app]{register_app()}}.}
 
-\item{ip}{TODO}
+\item{ip}{IP address to scp to.}
 
-\item{scp_token}{TODO}
-
-\item{require_app_token}{TODO}
+\item{scp_token}{Token.}
 }
 \description{
 Copy app to a remote location over SCP

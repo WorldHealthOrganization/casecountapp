@@ -1,8 +1,8 @@
 #' Deploy an app to Netlify
 #'
 #' @param app An app object created with [register_app()].
-#' @param netlify_app_id TODO
-#' @param require_app_token TODO
+#' @param netlify_app_id Netlify app ID.
+#' @param require_app_token Netlify app token.
 #' @export
 deploy_netlify <- function(app, netlify_app_id, require_app_token = FALSE) {
   if (!inherits(app, "registered_app"))
@@ -33,10 +33,9 @@ deploy_netlify <- function(app, netlify_app_id, require_app_token = FALSE) {
 #' Copy app to a local location
 #' 
 #' @param app An app object created with [register_app()].
-#' @param dest_dir TODO
-#' @param require_app_token TODO
+#' @param dest_dir Destination directory.
 #' @export
-deploy_cp <- function(app, dest_dir, require_app_token = FALSE) {
+deploy_cp <- function(app, dest_dir) {
   if (!inherits(app, "registered_app"))
     stop("Not a valid object.", call. = FALSE)
 
@@ -46,11 +45,10 @@ deploy_cp <- function(app, dest_dir, require_app_token = FALSE) {
 #' Copy app to a remote location over SCP
 #'
 #' @param app An app object created with [register_app()].
-#' @param ip TODO
-#' @param scp_token TODO
-#' @param require_app_token TODO
+#' @param ip IP address to scp to.
+#' @param scp_token Token.
 #' @export
-deploy_scp <- function(app, ip, scp_token = NULL, require_app_token = FALSE) {
+deploy_scp <- function(app, ip, scp_token = NULL) {
   if (!inherits(app, "registered_app"))
     stop("Not a valid object.", call. = FALSE)
 

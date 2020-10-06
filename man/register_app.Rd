@@ -4,7 +4,7 @@
 \alias{register_app}
 \title{Register an app}
 \usage{
-register_app(name, path = tempfile())
+register_app(name, path = tempfile(), disclaimer = FALSE)
 }
 \arguments{
 \item{name}{App name.}
@@ -13,6 +13,8 @@ register_app(name, path = tempfile())
 By default, this is a temporary directory, and then the app can be
 deployed to possibly several locations using \code{\link[=deploy_cp]{deploy_cp()}} or other
 deployment mechanisms.}
+
+\item{disclaimer}{Optional string of disclaimer text to display when the app is loaded.}
 }
 \description{
 Register an app

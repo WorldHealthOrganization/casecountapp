@@ -4,14 +4,12 @@
 \alias{deploy_cp}
 \title{Copy app to a local location}
 \usage{
-deploy_cp(app, dest_dir, require_app_token = FALSE)
+deploy_cp(app, dest_dir)
 }
 \arguments{
 \item{app}{An app object created with \code{\link[=register_app]{register_app()}}.}
 
-\item{dest_dir}{TODO}
-
-\item{require_app_token}{TODO}
+\item{dest_dir}{Destination directory.}
 }
 \description{
 Copy app to a local location

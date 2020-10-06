@@ -1,24 +1,23 @@
 #' Add a case count display using 'geo cards' to an app
 #'
 #' @param app An app object created with [register_app()].
-#' @param sources TODO
-#' @param name TODO
-#' @param desc TODO
-#' @param ref_source TODO
-#' @param append_higher_admin_name TODO
-#' @param max_date TODO
-#' @param min_date TODO
-#' @param geo_links TODO
-#' @param nrow TODO
-#' @param ncol TODO
-#' @param disclaimer TODO
-#' @param thumb TODO
-#' @param state TODO
-#' @param views TODO
-#' @param id TODO
-#' @param order TODO
-#' @param case_fatality_max TODO
-#' @param md_desc TODO
+#' @param sources A list of sources created with [source_list()].
+#' @param name A name for the display, which is displayed in the header of the app when this display is selected.
+#' @param desc A description that will be shown under the name.
+#' @param ref_source The name of the reference source, which should match one of the source_ids provided in [source_entry()] when building the [source_list()].
+#' @param append_higher_admin_name If \code{TRUE}, will append the higher-level admin name to the geocard headers. For example, if currently creating a display for admin level 2 (e.g. US counties), setting to TRUE will append the state name to the geocard header. So if viewing for Benton County in the state of Washington, the header, instead of being simply being "Benton", will now be "Benton, Washington".
+#' @param max_date Optional maximum date to plot. If not specified, will be set to latest date.
+#' @param min_date Optional minimum date to plot. If not specified, will be set to 8 weeks prior to max date.
+#' @param geo_links Optional object or list of objects created by [geo_link_href()] or [geo_link_filter()] that will provide links to other displays (e.g. for a given continent, provide a link in its card that when clicked will open up the display for all countries in that continent).
+#' @param nrow Default number of rows to show in the display.
+#' @param ncol Default number of columns to show in the display.
+#' @param thumb Optional path to an image file (png or jpeg) to use as the thumbnail for the display.
+#' @param state Optional initial state (see the \code{state} argument of [trelliscopejs::trelliscope] for more details).
+#' @param views Optional pre-specified views to allow the user to choose between. See [default_views()] for more information.
+#' @param id Optional ID passed to [trelliscopejs::trelliscope].
+#' @param order Integer indicating what order this display should appear in in the display list shown when the app opens.
+#' @param case_fatality_max The maximum y-axis limit to allow for case fatality percentage. Passed to [geocard::geocard()].
+#' @param md_desc Optional longer-form description of the display, provided as a markdown string.
 #' @importFrom geocard get_cogs geocard
 #' @importFrom dplyr %>% mutate filter select ungroup one_of
 #' @importFrom purrr map map_lgl
@@ -38,7 +37,6 @@ build_casecount_display <- function(
   geo_links = NULL,
   nrow = 2,
   ncol = 3,
-  disclaimer = FALSE,
   thumb = FALSE,
   state = NULL,
   views = NULL,
@@ -50,8 +48,19 @@ build_casecount_display <- function(
   if (!inherits(app, "registered_app"))
     stop("'app' not a valid object. See register_app().", call. = FALSE)
 
+  if (!inherits(sources, "casecount_source_list"))
+    stop("sources must be specified by source_list()", call. = FALSE)
+
   if (is.null(ref_source))
     ref_source <- sources[[1]]$source
+
+  if (inherits(geo_links, "geo_link"))
+    geo_links <- list(geo_links)
+  lapply(geo_links, function(lnk) {
+    if (!inherits(lnk, "geo_link"))
+      stop("geo_links must be a list of objects created with ",
+        "geo_link_href() or geo_link_filter().", call. = FALSE)
+  })
 
   geo_higher_level <- NULL
   if (append_higher_admin_name)
@@ -160,7 +169,7 @@ build_casecount_display <- function(
     nrow = nrow,
     ncol = ncol,
     md_desc = md_desc,
-    disclaimer = disclaimer)
+    disclaimer = app$disclaimer)
 
   print(p)
 }
