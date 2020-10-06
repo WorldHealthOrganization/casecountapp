@@ -2,9 +2,7 @@
 
 export(build_casecount_display)
 export(default_views)
-export(deploy_cp)
 export(deploy_netlify)
-export(deploy_scp)
 export(geo_link_filter)
 export(geo_link_href)
 export(register_app)

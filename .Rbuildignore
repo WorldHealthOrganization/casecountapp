@@ -2,3 +2,6 @@
 ^LICENSE\.md$
 ^casecountapp\.code-workspace$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

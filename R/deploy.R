@@ -30,27 +30,27 @@ deploy_netlify <- function(app, netlify_app_id, require_app_token = FALSE) {
   res == 0
 }
 
-#' Copy app to a local location
-#' 
-#' @param app An app object created with [register_app()].
-#' @param dest_dir Destination directory.
-#' @export
-deploy_cp <- function(app, dest_dir) {
-  if (!inherits(app, "registered_app"))
-    stop("Not a valid object.", call. = FALSE)
+# #' Copy app to a local location
+# #' 
+# #' @param app An app object created with [register_app()].
+# #' @param dest_dir Destination directory.
+# #' @export
+# deploy_cp <- function(app, dest_dir) {
+#   if (!inherits(app, "registered_app"))
+#     stop("Not a valid object.", call. = FALSE)
 
-  message("Not yet implemented")
-}
+#   message("Not yet implemented")
+# }
 
-#' Copy app to a remote location over SCP
-#'
-#' @param app An app object created with [register_app()].
-#' @param ip IP address to scp to.
-#' @param scp_token Token.
-#' @export
-deploy_scp <- function(app, ip, scp_token = NULL) {
-  if (!inherits(app, "registered_app"))
-    stop("Not a valid object.", call. = FALSE)
+# #' Copy app to a remote location over SCP
+# #'
+# #' @param app An app object created with [register_app()].
+# #' @param ip IP address to scp to.
+# #' @param scp_token Token.
+# #' @export
+# deploy_scp <- function(app, ip, scp_token = NULL) {
+#   if (!inherits(app, "registered_app"))
+#     stop("Not a valid object.", call. = FALSE)
 
-  message("Not yet implemented")
-}
+#   message("Not yet implemented")
+# }

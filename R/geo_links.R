@@ -1,4 +1,4 @@
-#' Specify a cognostic that links to another display of a higher level of geographic resolution associated with the given geographic entity.
+#' Specify a cognostic that links to another display of a higher level of geographic resolution associated with the given geographic entity
 #'
 #' @param display The name of the display to link to.
 #' @param variable The variable to use to specify which subset to 
@@ -20,7 +20,7 @@ geo_link_filter <- function(display, variable, ref_level, desc = NULL, type = "h
   ), class = c("geo_link", "list"))
 }
 
-#' Specify a cognostic that links to another display of a higher level of geographic resolution.
+#' Specify a cognostic that links to another display of a higher level of geographic resolution
 #'
 #' @param display The name of the display to link to.
 #' @param ref_level String that will be used in constructing the cognostic name (e.g. if ref_level = "who_regions", the cognostic will be called "view_who_regions").

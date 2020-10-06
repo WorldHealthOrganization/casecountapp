@@ -77,6 +77,4 @@ state_display <- build_casecount_display(
 
 # view the app
 view_app(app)
-
-# can deploy with functions such as deploy_netlify(), deploy_cp(), deploy_scp()
 ```

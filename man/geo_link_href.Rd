@@ -2,7 +2,7 @@
 % Please edit documentation in R/geo_links.R
 \name{geo_link_href}
 \alias{geo_link_href}
-\title{Specify a cognostic that links to another display of a higher level of geographic resolution.}
+\title{Specify a cognostic that links to another display of a higher level of geographic resolution}
 \usage{
 geo_link_href(display, ref_level, desc = NULL, type = "href")
 }
@@ -16,5 +16,5 @@ geo_link_href(display, ref_level, desc = NULL, type = "href")
 \item{type}{One of either "href" or "href_hash". "href" will open the link in a new page. "href_hash" will update the page's hash and reload the page (useful when changing state inside an iframe).}
 }
 \description{
-Specify a cognostic that links to another display of a higher level of geographic resolution.
+Specify a cognostic that links to another display of a higher level of geographic resolution
 }
