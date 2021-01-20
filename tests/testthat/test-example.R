@@ -22,7 +22,6 @@ state_sources <- source_list(
     file = system.file("example-data/admin1/FACTS.csv", package = "casecountapp")))
 
 test_that("app creation works", {
-
   app <- register_app("US-Covid19")
 
   country_display <- build_casecount_display(

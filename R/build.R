@@ -17,6 +17,7 @@
 #' @param id Optional ID passed to [trelliscopejs::trelliscope].
 #' @param order Integer indicating what order this display should appear in in the display list shown when the app opens.
 #' @param case_fatality_max The maximum y-axis limit to allow for case fatality percentage. Passed to [geocard::geocard()].
+#' @param require_token Should a token be required to view the app? Passed to [trelliscopejs::trelliscope].
 #' @param md_desc Optional longer-form description of the display, provided as a markdown string.
 #' @importFrom geocard get_cogs geocard
 #' @importFrom dplyr %>% mutate filter select ungroup one_of
@@ -43,6 +44,7 @@ build_casecount_display <- function(
   id = NULL,
   order = 1,
   case_fatality_max = 20,
+  require_token = FALSE,
   md_desc = ""
 ) {
   if (!inherits(app, "registered_app"))
@@ -169,6 +171,7 @@ build_casecount_display <- function(
     nrow = nrow,
     ncol = ncol,
     md_desc = md_desc,
+    require_token = require_token,
     disclaimer = app$disclaimer)
 
   print(p)

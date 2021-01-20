@@ -22,6 +22,7 @@ build_casecount_display(
   id = NULL,
   order = 1,
   case_fatality_max = 20,
+  require_token = FALSE,
   md_desc = ""
 )
 }
@@ -59,6 +60,8 @@ build_casecount_display(
 \item{order}{Integer indicating what order this display should appear in in the display list shown when the app opens.}
 
 \item{case_fatality_max}{The maximum y-axis limit to allow for case fatality percentage. Passed to \code{\link[geocard:geocard]{geocard::geocard()}}.}
+
+\item{require_token}{Should a token be required to view the app? Passed to \link[trelliscopejs:trelliscope]{trelliscopejs::trelliscope}.}
 
 \item{md_desc}{Optional longer-form description of the display, provided as a markdown string.}
 }
